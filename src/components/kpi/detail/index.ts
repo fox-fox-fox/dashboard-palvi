@@ -1,0 +1,1 @@
+export { KPIDetail } from "./KPIDetail";

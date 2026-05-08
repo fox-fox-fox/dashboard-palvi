@@ -1,0 +1,55 @@
+@import "./tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
+    font-family:
+      Geist, Inter, system-ui, -apple-system, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  /*
+   * Focus ring de alto contraste:
+   *   1. Outline sólido y grueso (3px) en color de marca.
+   *   2. Outline-offset 3px crea un "moat" visual entre el elemento y el ring.
+   *   3. Halo extra via box-shadow (alpha 0.30) para que el ring se vea
+   *      sobre fondos del mismo color que el accent (cards, badges).
+   * Las CSS vars ya respetan dark mode (accent cambia a 818cf8).
+   * NOTA: no aplicamos border-radius global — cada elemento conserva el suyo
+   * y el outline moderno sigue ese radius automáticamente.
+   */
+  *:focus-visible {
+    outline: 3px solid rgb(var(--color-accent));
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgb(var(--color-accent) / 0.3);
+    transition: box-shadow 120ms var(--ease-out-expo);
+  }
+  /* Preserva sombras existentes de cards cuando reciben foco directo. */
+  .shadow-sm:focus-visible {
+    box-shadow:
+      0 0 0 6px rgb(var(--color-accent) / 0.3),
+      var(--shadow-sm);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
