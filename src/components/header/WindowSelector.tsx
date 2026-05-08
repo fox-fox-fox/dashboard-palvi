@@ -15,6 +15,7 @@ export function WindowSelector() {
         value={windowKey}
         onChange={setWindow}
         ariaLabel="Seleccionar ventana temporal"
+        tone="accent"
       />
     </div>
   );

@@ -8,6 +8,12 @@ interface SegmentedControlProps<T extends string> {
   onChange: (next: T) => void;
   ariaLabel: string;
   className?: string;
+  /**
+   * "subtle" (default): activo usa surface neutro. Apto para selectores secundarios.
+   * "accent": activo usa color de marca con texto blanco. Apto cuando el estado activo
+   * debe ser inmediatamente visible (ej. el dataset actual).
+   */
+  tone?: "subtle" | "accent";
 }
 
 export function SegmentedControl<T extends string,>({
@@ -16,6 +22,7 @@ export function SegmentedControl<T extends string,>({
   onChange,
   ariaLabel,
   className,
+  tone = "subtle",
 }: SegmentedControlProps<T>) {
   const buttonsRef = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -68,10 +75,12 @@ export function SegmentedControl<T extends string,>({
             onClick={() => onChange(option.value)}
             onKeyDown={(event) => handleKeyDown(event, index)}
             className={cn(
-              "min-h-11 min-w-11 px-3 text-small font-medium rounded-md transition-colors duration-200 ease-out-expo",
+              "min-h-11 min-w-11 px-3 text-small rounded-md transition-colors duration-200 ease-out-expo",
               isActive
-                ? "bg-surface text-text shadow-sm"
-                : "text-text-muted hover:text-text",
+                ? tone === "accent"
+                  ? "bg-indigo-500 dark:bg-indigo-400 text-white font-bold shadow-md ring-2 ring-indigo-500/30 dark:ring-indigo-400/40"
+                  : "bg-surface text-text font-medium shadow-sm"
+                : "text-text-muted font-medium hover:text-text",
             )}
           >
             {option.label}

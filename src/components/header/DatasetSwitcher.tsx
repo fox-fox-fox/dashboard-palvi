@@ -14,6 +14,7 @@ export function DatasetSwitcher() {
       value={datasetId}
       onChange={setDataset}
       ariaLabel="Seleccionar dataset"
+      tone="accent"
     />
   );
 }
